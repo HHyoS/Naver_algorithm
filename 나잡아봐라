@@ -4,12 +4,12 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-int answer = 776;
+int answer = 447;
 void dfs(queue<pair<int, int>> que, int time, int count) {
 	if (time >= answer)
 		return;
 	int size = que.size();
-	for (int a = 0; a < size; ++a) {
+	for (int a = 0; a < size; ++a) { 
 		int coni = que.front().first;
 		int brown = que.front().second;
 		if (coni > 200000) {
