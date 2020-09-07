@@ -1,0 +1,57 @@
+#include <string>
+#include <map>
+#include <utility>
+#include <iostream>
+#include <queue>
+using namespace std;
+int answer = 776;
+void dfs(queue<pair<int, int>> que, int time, int count) {
+	if (time >= answer)
+		return;
+	int size = que.size();
+	for (int a = 0; a < size; ++a) {
+		int coni = que.front().first;
+		int brown = que.front().second;
+		if (coni > 200000) {
+			answer = -1;
+			return;
+		}
+		else if(coni == brown){
+			answer = time;
+			return;
+		}
+		que.pop();
+		que.push({ coni,brown });
+	}
+
+	++time;
+	
+	for (int a = 0; a < size; ++a) {
+		int coni = que.front().first;
+		int brown = que.front().second;
+		que.pop();
+		if(brown -1 >= 0)
+			que.push({ coni + count, brown - 1 });
+		if (brown + 1 <= 200000)
+			que.push({ coni + count, brown + 1 });
+		if (brown * brown <= 200000)
+			que.push({ coni + count, brown * 2 });
+		
+	}
+	if(!que.empty())
+		dfs(que, time, count+1);
+
+}
+int main() {
+	int c;
+	int b;
+  // example input : 11 2   > output 5;
+	cin >> c >> b;
+
+	queue<pair<int, int>> que;
+	que.push({ c,b });
+	dfs(que, 0, 1);
+
+	printf("%d", answer);
+	return 0;
+}
